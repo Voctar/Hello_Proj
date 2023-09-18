@@ -11,6 +11,7 @@ on:
 jobs:
     build_linux:
       runs-on: ${{ matrix.os }}
+      container: "ghcr.io/geode-solutions/ubuntu:master"
   
       strategy:
         # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
@@ -48,8 +49,6 @@ jobs:
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: >
-          apt-get update && apt-get upgrade
-          apt-get install -y cmake ninja-build build-essential
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
           -G "Ninja"
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
